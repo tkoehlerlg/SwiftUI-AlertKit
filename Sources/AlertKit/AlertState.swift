@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import ComposableArchitecture
+import Dependencies
 
 public final class AlertState: ObservableObject {
     @Published public private(set) var alerts: [Alert] = []
@@ -32,12 +34,7 @@ public final class AlertState: ObservableObject {
     }
 }
 
-extension AlertState {
-    internal static var mock: Self {
-        .init([.mock])
-    }
-}
-
+// MARK: Environment
 internal struct AlertStateKey: EnvironmentKey {
     public static var defaultValue: AlertState = .init()
 }
@@ -46,5 +43,24 @@ extension EnvironmentValues {
     public var alertState: AlertState {
         get { self[AlertStateKey.self] }
         set { self[AlertStateKey.self] = newValue }
+    }
+}
+
+// MARK: Composable Architecture
+extension AlertStateKey: DependencyKey {
+    public static var liveValue: AlertState = .init()
+}
+
+extension DependencyValues {
+    public var alertState: AlertState {
+        get { self[AlertStateKey.self] }
+        set { self[AlertStateKey.self] = newValue }
+    }
+}
+
+// MARK: mock
+extension AlertState {
+    internal static var mock: Self {
+        .init([.mock])
     }
 }
