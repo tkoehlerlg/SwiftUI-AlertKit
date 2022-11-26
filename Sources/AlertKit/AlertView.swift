@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SystemColors
 
 struct AlertView: View {
     var alert: Alert
@@ -16,7 +17,7 @@ struct AlertView: View {
 
     init<S>(
         alert: Alert,
-        backgorund: S = .ultraThinMaterial,
+        backgorund: S = Color.systemGray5,
         accentColor: Color,
         fontColor: Color = .primary,
         closeAlert: @escaping () -> Void
@@ -78,7 +79,6 @@ struct AlertView_Previews: PreviewProvider {
         AlertView(
             alert: .mock,
             accentColor: .blue,
-            fontColor: .black,
             closeAlert: {}
         )
     }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ColorSync
 
 struct AlertStackView: View {
     @ObservedObject var alertState: AlertState
@@ -17,7 +18,6 @@ struct AlertStackView: View {
             ForEach(alertState.alerts) { alert in
                 AlertView(
                     alert: alert,
-                    backgorund: Color(hue: 0, saturation: 0, brightness: 0.93),
                     accentColor: accentColor,
                     closeAlert: {
                         alertState.closeAlert(alert)
