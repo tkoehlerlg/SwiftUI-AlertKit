@@ -10,20 +10,20 @@ import SystemColors
 
 struct AlertView: View {
     var alert: Alert
-    var backgorund: AnyShapeStyle
+    var background: AnyShapeStyle
     var accentColor: Color
     var fontColor: Color
     var closeAlert: () -> Void
 
     init<S>(
         alert: Alert,
-        backgorund: S = .thinMaterial,
+        background: S = .thinMaterial,
         accentColor: Color,
         fontColor: Color = .primary,
         closeAlert: @escaping () -> Void
     ) where S : ShapeStyle {
         self.alert = alert
-        self.backgorund = AnyShapeStyle(backgorund)
+        self.background = AnyShapeStyle(background)
         self.accentColor = accentColor
         self.fontColor = fontColor
         self.closeAlert = closeAlert
@@ -68,7 +68,7 @@ struct AlertView: View {
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 15)
         .padding(.vertical, 10)
-        .background(backgorund)
+        .background(background)
         .cornerRadius(15)
         .padding(40)
     }

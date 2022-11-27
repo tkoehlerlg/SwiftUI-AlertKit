@@ -11,16 +11,16 @@ import ColorSync
 struct AlertStackView: View {
     @ObservedObject private var alertState: AlertState
     @State private var popAlert: Bool = false
-    private var alertBackgorund: AnyShapeStyle? = nil
+    private var alertBackground: AnyShapeStyle? = nil
     private var accentColor: Color
 
     init<S>(
         alertState: AlertState,
-        alertBackgorund: S,
+        alertBackground: S,
         accentColor: Color
     ) where S : ShapeStyle {
         self.alertState = alertState
-        self.alertBackgorund = AnyShapeStyle(alertBackgorund)
+        self.alertBackground = AnyShapeStyle(alertBackground)
         self.accentColor = accentColor
     }
 
@@ -36,10 +36,10 @@ struct AlertStackView: View {
         ZStack {
             ForEach(alertState.alerts) { alert in
                 Group {
-                    if let alertBackgorund = alertBackgorund {
+                    if let alertBackground = alertBackground {
                         AlertView(
                             alert: alert,
-                            backgorund: alertBackgorund,
+                            background: alertBackground,
                             accentColor: accentColor,
                             closeAlert: {
                                 alertState.closeAlert(alert)
