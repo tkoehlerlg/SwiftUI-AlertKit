@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 extension View {
-    public func alert(_ alert: Alert?, alertState: AlertState) -> some View {
+    public func alert(_ alert: Alert?) -> some View {
+        @Environment(\.alertState) var alertState
         if let alert = alert {
             withAnimation(.easeOut(duration: 0.3).delay(0.5)) {
                 alertState.addAlert(alert)

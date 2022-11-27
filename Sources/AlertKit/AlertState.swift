@@ -28,9 +28,7 @@ public final class AlertState: ObservableObject {
     }
 
     public func closeFirst() {
-        if !alerts.isEmpty {
-            alerts.removeFirst()
-        }
+        if !alerts.isEmpty { alerts.removeFirst() }
     }
 }
 
@@ -48,7 +46,7 @@ extension EnvironmentValues {
 
 // MARK: Composable Architecture
 extension AlertStateKey: DependencyKey {
-    public static var liveValue: AlertState = .init()
+    static var liveValue: AlertState = .init()
 }
 
 extension DependencyValues {
