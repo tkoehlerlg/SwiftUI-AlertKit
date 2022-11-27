@@ -17,30 +17,26 @@ public struct GlobalAlertView<Content>: View where Content : View {
 
     public init<OB, AB>(
         overlayBackground: OB = .ultraThinMaterial,
-        alertBackground: AB? = nil,
+        alertBackground: AB = .thinMaterial,
         @ViewBuilder alertStackView: @escaping (AlertState) -> Content,
         @ViewBuilder content: () -> Content
     ) where OB : ShapeStyle, AB : ShapeStyle {
         _alertState = StateObject(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
-        if let alertBackgorund = alertBackground {
-            self.alertBackground = AnyShapeStyle(alertBackgorund)
-        }
+        self.alertBackground = AnyShapeStyle(alertBackground)
         self.alertStackView = alertStackView
         self.content = content()
     }
 
     public init<OB, AB>(
         overlayBackground: OB = .ultraThinMaterial,
-        alertBackground: AB? = nil,
+        alertBackground: AB = .thinMaterial,
         accentColor: Color,
         @ViewBuilder content: () -> Content
     ) where OB : ShapeStyle, AB : ShapeStyle {
         _alertState = StateObject(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
-        if let alertBackground = alertBackground {
-            self.alertBackground = AnyShapeStyle(alertBackground)
-        }
+        self.alertBackground = AnyShapeStyle(alertBackground)
         self.accentColor = accentColor
         self.content = content()
     }
@@ -65,10 +61,13 @@ public struct GlobalAlertView<Content>: View where Content : View {
             if let alertStackView = alertStackView {
                 alertStackView(alertState)
             } else {
-                AlertStackView(
-                    alertState: alertState,
-                    accentColor: accentColor
-                )
+                if let alertBackground {
+                    AlertStackView(
+                        alertState: alertState,
+                        alertBackground: alertBackground,
+                        accentColor: accentColor
+                    )
+                }
             }
         }
     }
