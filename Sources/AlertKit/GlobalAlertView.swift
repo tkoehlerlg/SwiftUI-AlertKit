@@ -30,12 +30,12 @@ public struct GlobalAlertView<Content>: View where Content : View {
         self.content = content()
     }
 
-    public init<S>(
-        overlayBackground: S = .ultraThinMaterial,
-        alertBackground: S? = nil,
+    public init<OB, AB>(
+        overlayBackground: OB = .ultraThinMaterial,
+        alertBackground: AB? = nil,
         accentColor: Color,
         @ViewBuilder content: () -> Content
-    ) where S : ShapeStyle {
+    ) where OB : ShapeStyle, AB : ShapeStyle {
         _alertState = StateObject(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
         if let alertBackground = alertBackground {
