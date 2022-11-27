@@ -10,28 +10,37 @@ import SwiftUI
 public struct GlobalAlertView<Content>: View where Content : View {
     @StateObject private var alertState: AlertState
     private var overlayBackground: AnyShapeStyle
+    private var alertBackgorund: AnyShapeStyle? = nil
     private var alertStackView: ((AlertState) -> Content)? = nil
     private var accentColor: Color = .accentColor
     private var content: Content
 
     public init<S>(
         overlayBackground: S = .ultraThinMaterial,
+        alertBackgorund: S? = nil,
         @ViewBuilder alertStackView: @escaping (AlertState) -> Content,
         @ViewBuilder content: () -> Content
     ) where S : ShapeStyle {
         _alertState = StateObject(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
+        if let alertBackgorund = alertBackgorund {
+            self.alertBackgorund = AnyShapeStyle(alertBackgorund)
+        }
         self.alertStackView = alertStackView
         self.content = content()
     }
 
     public init<S>(
         overlayBackground: S = .ultraThinMaterial,
+        alertBackgorund: S? = nil,
         accentColor: Color,
         @ViewBuilder content: () -> Content
     ) where S : ShapeStyle {
         _alertState = StateObject(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
+        if let alertBackgorund = alertBackgorund {
+            self.alertBackgorund = AnyShapeStyle(alertBackgorund)
+        }
         self.accentColor = accentColor
         self.content = content()
     }

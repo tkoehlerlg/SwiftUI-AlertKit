@@ -17,7 +17,7 @@ struct AlertView: View {
 
     init<S>(
         alert: Alert,
-        backgorund: S = Color.systemGray5,
+        backgorund: S = .thinMaterial,
         accentColor: Color,
         fontColor: Color = .primary,
         closeAlert: @escaping () -> Void

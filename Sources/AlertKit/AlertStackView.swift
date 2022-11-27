@@ -9,20 +9,52 @@ import SwiftUI
 import ColorSync
 
 struct AlertStackView: View {
-    @ObservedObject var alertState: AlertState
-    @State var popAlert: Bool = false
-    var accentColor: Color
+    @ObservedObject private var alertState: AlertState
+    @State private var popAlert: Bool = false
+    private var alertBackgorund: AnyShapeStyle? = nil
+    private var accentColor: Color
+
+    init<S>(
+        alertState: AlertState,
+        alertBackgorund: S,
+        accentColor: Color
+    ) where S : ShapeStyle {
+        self.alertState = alertState
+        self.alertBackgorund = AnyShapeStyle(alertBackgorund)
+        self.accentColor = accentColor
+    }
+
+    init(
+        alertState: AlertState,
+        accentColor: Color
+    ) {
+        self.alertState = alertState
+        self.accentColor = accentColor
+    }
 
     var body: some View {
         ZStack {
             ForEach(alertState.alerts) { alert in
-                AlertView(
-                    alert: alert,
-                    accentColor: accentColor,
-                    closeAlert: {
-                        alertState.closeAlert(alert)
+                Group {
+                    if let alertBackgorund = alertBackgorund {
+                        AlertView(
+                            alert: alert,
+                            backgorund: alertBackgorund,
+                            accentColor: accentColor,
+                            closeAlert: {
+                                alertState.closeAlert(alert)
+                            }
+                        )
+                    } else {
+                        AlertView(
+                            alert: alert,
+                            accentColor: accentColor,
+                            closeAlert: {
+                                alertState.closeAlert(alert)
+                            }
+                        )
                     }
-                )
+                }
                 .transition(.scale(scale: 1.1).combined(with: .opacity).animation(.easeOut(duration: 0.5)))
                 .opacity(alertState.alerts.firstIndex(of: alert) ?? -1 == 0 ? 1 : 0)
             }
