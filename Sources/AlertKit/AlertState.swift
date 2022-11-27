@@ -10,8 +10,12 @@ import SwiftUI
 import ComposableArchitecture
 import Dependencies
 
-public final class AlertState: ObservableObject {
-    @Published public private(set) var alerts: [Alert] = []
+public final class AlertState: ObservableObject, Equatable {
+    public static func == (lhs: AlertState, rhs: AlertState) -> Bool {
+        lhs.alerts == rhs.alerts
+    }
+
+    @Published public var alerts: [Alert] = []
 
     public init() { }
 
@@ -55,6 +59,7 @@ extension DependencyValues {
         set { self[AlertStateKey.self] = newValue }
     }
 }
+
 
 // MARK: mock
 extension AlertState {

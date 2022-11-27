@@ -6,31 +6,35 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+import Dependencies
 
 public struct GlobalAlertView<Content>: View where Content : View {
-    @StateObject private var alertState: AlertState
+    @BindableState private var alertState: AlertState
     private var overlayBackground: AnyShapeStyle
     private var alertStackView: ((AlertState) -> Content)? = nil
     private var accentColor: Color = .accentColor
     private var content: Content
 
     public init<S>(
+        alertState: BindableState<AlertState>? = nil,
         overlayBackground: S = .ultraThinMaterial,
         @ViewBuilder alertStackView: @escaping (AlertState) -> Content,
         @ViewBuilder content: () -> Content
     ) where S : ShapeStyle {
-        _alertState = StateObject(wrappedValue: .init())
+        _alertState = alertState ?? BindableState(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
         self.alertStackView = alertStackView
         self.content = content()
     }
 
     public init<S>(
+        alertState: BindableState<AlertState>? = nil,
         overlayBackground: S = .ultraThinMaterial,
         accentColor: Color,
         @ViewBuilder content: () -> Content
     ) where S : ShapeStyle {
-        _alertState = StateObject(wrappedValue: .init())
+        _alertState = alertState ?? BindableState(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
         self.accentColor = accentColor
         self.content = content()
