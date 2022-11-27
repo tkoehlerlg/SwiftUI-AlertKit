@@ -11,11 +11,11 @@ import ComposableArchitecture
 import Dependencies
 
 public final class AlertState: ObservableObject {
-    @Published public private(set) var alerts: [Alert] = []
+    @Published public private(set) var alerts: IdentifiedArrayOf<Alert> = .init()
 
     public init() { }
 
-    internal init(_ alerts: [Alert]) {
+    internal init(_ alerts: IdentifiedArrayOf<Alert>) {
         self.alerts = alerts
     }
 

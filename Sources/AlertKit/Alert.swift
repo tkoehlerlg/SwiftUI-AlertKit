@@ -12,31 +12,29 @@ public struct Alert: Identifiable, Equatable {
         lhs.id == rhs.id
     }
 
-    public var id: UUID
+    public var id: String {
+        title+description
+    }
     var title: String
     var description: String
     var buttons: [Button]
 
     public init(
-        id: UUID = UUID(),
         title: String,
         description: String,
         buttons: [Button]
     ) {
-        self.id = id
         self.title = title
         self.description = description
         self.buttons = buttons
     }
 
     public init(
-        id: UUID = UUID(),
         title: String,
         description: String,
         primaryButton: Button,
         secondaryButton: Button? = nil
     ) {
-        self.id = id
         self.title = title
         self.description = description
         if let secondaryButton = secondaryButton {
