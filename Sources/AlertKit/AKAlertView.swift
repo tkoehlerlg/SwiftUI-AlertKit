@@ -9,14 +9,14 @@ import SwiftUI
 import SystemColors
 
 struct AlertView: View {
-    var alert: Alert
+    var alert: AKAlert
     var background: AnyShapeStyle
     var accentColor: Color
     var fontColor: Color
     var closeAlert: () -> Void
 
     init<S>(
-        alert: Alert,
+        alert: AKAlert,
         background: S = .thinMaterial,
         accentColor: Color,
         fontColor: Color = .primary,
@@ -35,7 +35,7 @@ struct AlertView: View {
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundColor(fontColor)
                 .padding(.top, 15)
-            Text(alert.description)
+            Text(alert.message)
                 .multilineTextAlignment(.center)
                 .font(.system(size: 15))
                 .foregroundColor(fontColor)
@@ -51,17 +51,8 @@ struct AlertView: View {
                     }, label: {
                         Text(button.title)
                     })
-                    switch button.style {
-                    case .primary:
-                        buttonView
-                            .buttonStyle(PrimaryButtonStyle(accentColor: accentColor))
-                    case .secondary:
-                        buttonView
-                            .buttonStyle(SecondaryButtonStyle(accentColor: accentColor))
-                    case .destructiv:
-                        buttonView
-                            .buttonStyle(DestructivButtonStyle())
-                    }
+                    buttonView
+                        .buttonStyle(AKButtonStyle(button.style))
                 }
             }
             .padding(15)
@@ -78,7 +69,7 @@ struct AlertView: View {
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
         AlertView(
-            alert: .mock,
+            alert: AKAlert.mock,
             accentColor: .blue,
             closeAlert: {}
         )

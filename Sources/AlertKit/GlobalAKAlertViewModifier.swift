@@ -1,5 +1,5 @@
 //
-//  View+Extension.swift
+//  GlobalAKAlertViewModifier.swift
 //  SwiftUI-AlertKit
 //
 //  Created by Torben Köhler on 26.11.22.
@@ -8,9 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct GlobalAlertViewModifier: ViewModifier {
-    @EnvironmentObject var alertState: AlertState
-    @Binding var alert: Alert?
+struct GlobalAKAlertViewModifier: ViewModifier {
+    @EnvironmentObject var alertState: AKAlertState
+    @Binding var alert: AKAlert?
 
     func body(content: Content) -> some View {
         content
@@ -19,11 +19,11 @@ struct GlobalAlertViewModifier: ViewModifier {
 }
 
 extension View {
-    public func alert(_ alert: Binding<Alert?>) -> some View {
-        self.modifier(GlobalAlertViewModifier(alert: alert))
+    public func alert(_ alert: Binding<AKAlert?>) -> some View {
+        self.modifier(GlobalAKAlertViewModifier(alert: alert))
     }
 
-    func alert(_ alert: Binding<Alert?>, alertState: AlertState) -> some View {
+    func alert(_ alert: Binding<AKAlert?>, alertState: AKAlertState) -> some View {
         self.onChange(of: alert.wrappedValue) { newAlert in
             guard let newAlert = newAlert else {
                 alertState.closeFirstAlert()
@@ -37,10 +37,10 @@ extension View {
     }
 }
 
-extension Alert {
-    func setNilWhenAlertClosed(binding: Binding<Alert?>) -> Alert {
-        var alert = self
-        let closeAction = {
+extension AKAlert {
+    func setNilWhenAlertClosed(binding: Binding<AKAlert?>) -> AKAlert {
+        let alert = self.copy() as! AKAlert
+        let closeAction: () -> Void = {
             self.closeAction?()
             binding.wrappedValue = nil
         }

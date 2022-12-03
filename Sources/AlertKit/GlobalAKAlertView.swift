@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-public struct GlobalAlertView<Content>: View where Content : View {
-    @StateObject private var alertState: AlertState
+public struct GlobalAKAlertView<Content>: View where Content : View {
+    @StateObject private var alertState: AKAlertState
     private var overlayBackground: AnyShapeStyle
     private var alertBackground: AnyShapeStyle? = nil
-    private var alertStackView: ((AlertState) -> Content)? = nil
+    private var alertStackView: ((AKAlertState) -> Content)? = nil
     private var accentColor: Color = .accentColor
     private var content: Content
 
     public init<OB, AB>(
         overlayBackground: OB = .ultraThinMaterial,
         alertBackground: AB = .thinMaterial,
-        @ViewBuilder alertStackView: @escaping (AlertState) -> Content,
+        @ViewBuilder alertStackView: @escaping (AKAlertState) -> Content,
         @ViewBuilder content: () -> Content
     ) where OB : ShapeStyle, AB : ShapeStyle {
         _alertState = StateObject(wrappedValue: .init())
@@ -75,7 +75,7 @@ public struct GlobalAlertView<Content>: View where Content : View {
 
 struct GlobalAlertView_Previews: PreviewProvider {
     static var previews: some View {
-        GlobalAlertView(accentColor: .orange) {
+        GlobalAKAlertView(accentColor: .orange) {
 //            Color.red
             Text("Hello Little Torben")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
