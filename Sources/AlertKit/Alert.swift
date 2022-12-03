@@ -18,15 +18,18 @@ public struct Alert: Identifiable, Equatable {
     var title: String
     var description: String
     var buttons: [Button]
+    var closeAction: (() -> Void)?
 
     public init(
         title: String,
         description: String,
-        buttons: [Button]
+        buttons: [Button],
+        closeAction: (() -> Void)? = nil
     ) {
         self.title = title
         self.description = description
         self.buttons = buttons
+        self.closeAction = closeAction
     }
 
     public init(

@@ -24,11 +24,15 @@ public final class AlertState: ObservableObject {
     }
 
     public func closeAlert(_ alert: Alert) {
+        alert.closeAction?()
         alerts.removeAll(where: { $0.id == alert.id })
     }
 
-    public func closeFirst() {
-        if !alerts.isEmpty { alerts.removeFirst() }
+    public func closeFirstAlert() {
+        if !alerts.isEmpty {
+            alerts.first!.closeAction?()
+            alerts.removeFirst()
+        }
     }
 }
 
