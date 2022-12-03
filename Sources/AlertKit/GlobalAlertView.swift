@@ -43,7 +43,7 @@ public struct GlobalAlertView<Content>: View where Content : View {
 
     public var body: some View {
         content
-            .environment(\.alertState, alertState)
+            .environmentObject(alertState)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay {
                 if alertState.alerts.count > 0 {
