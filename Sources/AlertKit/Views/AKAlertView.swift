@@ -12,20 +12,20 @@ struct AlertView: View {
     var alert: AKAlert
     var background: AnyShapeStyle
     var accentColor: Color
-    var fontColor: Color
+    var textColor: Color
     var closeAlert: () -> Void
 
     init<S>(
         alert: AKAlert,
         background: S = .thinMaterial,
         accentColor: Color,
-        fontColor: Color = .primary,
+        textColor: Color = .primary,
         closeAlert: @escaping () -> Void
     ) where S : ShapeStyle {
         self.alert = alert
         self.background = AnyShapeStyle(background)
         self.accentColor = accentColor
-        self.fontColor = fontColor
+        self.textColor = textColor
         self.closeAlert = closeAlert
     }
 
@@ -33,12 +33,12 @@ struct AlertView: View {
         VStack(spacing: 0) {
             Text(alert.title)
                 .font(.system(size: 20, weight: .semibold))
-                .foregroundColor(fontColor)
+                .foregroundColor(textColor)
                 .padding(.top, 15)
             Text(alert.message)
                 .multilineTextAlignment(.center)
                 .font(.system(size: 15))
-                .foregroundColor(fontColor)
+                .foregroundColor(textColor)
                 .padding(.top, 2)
                 .padding(.bottom, 5)
             VStack(spacing: 10) {
@@ -52,7 +52,7 @@ struct AlertView: View {
                         Text(button.title)
                     })
                     buttonView
-                        .buttonStyle(AKButtonStyle(button.style))
+                        .buttonStyle(AKButtonStyle(getBlueprint(button.style)))
                 }
             }
             .padding(15)
@@ -63,6 +63,22 @@ struct AlertView: View {
         .background(background)
         .cornerRadius(15)
         .padding(40)
+    }
+
+    func getBlueprint(_ style: AKButton.Style) -> AKButtonStyleBlueprint {
+        switch style {
+        case .system(let systemStyle):
+            switch systemStyle {
+            case .primary:
+                return .primary(accentColor: accentColor, textColor: .white)
+            case .secondary:
+                return .secondary(accentColor: accentColor)
+            case .destructive:
+                return .destructive()
+            }
+        case .custom(let blueprint):
+            return blueprint
+        }
     }
 }
 

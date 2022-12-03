@@ -107,17 +107,17 @@ extension AKAlert {
         buttons: [
             .init(
                 title: "Primary",
-                style: .primary(accentColor: .orange, textColor: .white),
+                style: .primary,
                 action: { print("Primary") }
             ),
             .init(
                 title: "Secondary",
-                style: .secondary(accentColor: .orange),
+                style: .secondary,
                 action: { print("Secondary") }
             ),
             .init(
                 title: "Destructiv",
-                style: .destructiv,
+                style: .destructive,
                 action: { print("Destructiv") }
             )
         ]
