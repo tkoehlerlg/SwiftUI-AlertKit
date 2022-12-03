@@ -40,12 +40,17 @@ extension AKButtonStyleBlueprint {
             borderColor: accentColor
         )
     }
-    public static var destructiv = Self(
-        backgroundColor: .clear,
-        textColor: .systemRed,
-        borderColor: .systemRed,
-        isPressedBackgroundColor: .systemRed,
-        isPressedTextColor: .white,
-        isPressedBorderColor: nil
-    )
+    public static func destructive(
+        warningColor: Color = .systemRed,
+        isPressedTextColor: Color = .white
+    ) -> Self {
+        .init(
+            backgroundColor: .clear,
+            textColor: warningColor,
+            borderColor: warningColor,
+            isPressedBackgroundColor: warningColor,
+            isPressedTextColor: isPressedTextColor,
+            isPressedBorderColor: nil
+        )
+    }
 }
