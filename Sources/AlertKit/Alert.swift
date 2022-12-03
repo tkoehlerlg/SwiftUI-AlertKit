@@ -23,12 +23,22 @@ public struct Alert: Identifiable, Equatable {
     public init(
         title: String,
         description: String,
-        buttons: [Button],
+        buttons: [Button] = [],
         closeAction: (() -> Void)? = nil
     ) {
         self.title = title
         self.description = description
-        self.buttons = buttons
+        if buttons.isEmpty {
+            self.buttons = [
+                .init(
+                    title: "Okay",
+                    style: .secondary,
+                    action: {}
+                )
+            ]
+        } else {
+            self.buttons = buttons
+        }
         self.closeAction = closeAction
     }
 
