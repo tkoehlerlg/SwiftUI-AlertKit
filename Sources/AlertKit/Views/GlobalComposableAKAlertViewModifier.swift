@@ -40,9 +40,9 @@ extension View {
             }
             if let _alert = alert.wrappedValue?.copy() as? ComposableAKAlert<Action> {
                 _alert.buttons = _alert.buttons.map {
-                    guard let button = $0 as? ComposableAKButton<Action>  else { return $0 }
+                    guard let button = $0 as? ComposableAKButton<Action>, let _action = button._action else { return $0 }
                     let action: () -> Void = {
-                        viewStore.send(button._action)
+                        viewStore.send(_action)
                     }
                     button.action = action
                     return button

@@ -50,9 +50,9 @@ extension AKButton: NSCopying {
 }
 
 public class ComposableAKButton<Action: Equatable>: AKButton {
-    var _action: Action
+    var _action: Action?
 
-    init(title: String, style: Style, action: Action) {
+    init(title: String, style: Style, action: Action?) {
         self._action = action
         super.init(
             title: title,
@@ -61,7 +61,7 @@ public class ComposableAKButton<Action: Equatable>: AKButton {
         )
     }
 
-    public init(title: String, style: SystemStyle, action: Action) {
+    public init(title: String, style: SystemStyle, action: Action?) {
         self._action = action
         super.init(
             title: title,
@@ -70,7 +70,7 @@ public class ComposableAKButton<Action: Equatable>: AKButton {
         )
     }
 
-    public init(title: String, style: AKButtonStyleBlueprint, action: Action) {
+    public init(title: String, style: AKButtonStyleBlueprint, action: Action?) {
         self._action = action
         super.init(
             title: title,
