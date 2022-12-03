@@ -36,6 +36,7 @@ struct AlertView: View {
                 .foregroundColor(fontColor)
                 .padding(.top, 15)
             Text(alert.description)
+                .multilineTextAlignment(.center)
                 .font(.system(size: 15))
                 .foregroundColor(fontColor)
                 .padding(.top, 2)
