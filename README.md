@@ -6,7 +6,7 @@ An Alert-Kit for SwiftUI! For easy integration without minding any logic or desi
 You can either integrate this Package in your *App-Project* or in your *Package.swift* file if you're building a Package. Simply refer to the current version `0.3.3` and set it to next minor version.
 
 ## 🛠️ Use
-This Project is focused on simple integration as well as easy maintaince you simply set the `GlobalAKAlertView` around your ParentView and everything works right out of the Box!
+This Project is focused on simple integration as well as easy maintaince. You simply set the `GlobalAKAlertView` around your ParentView and everything works right out of the Box!
 ```swift
 GlobalAKAlertView(accentColor: .orange) {
     ParentView { }
@@ -31,7 +31,7 @@ GlobalAKAlertView(
 ```
 
 #### Raising an Alert has never been easier!
-Just set an optional AKAlert to the desired alert and it alerts the user emiditly!
+Just set an optional AKAlert to the desired alert and it alerts the user immediately!
 ```swift
 struct ChildView: View {
     @State var alert: AKAlert?
@@ -107,4 +107,4 @@ struct ChildView: View {
 ```
 This is all!
 
-#### Hope you like the Repo and please left a star!
+#### Hope you like the repository and please left a star!
