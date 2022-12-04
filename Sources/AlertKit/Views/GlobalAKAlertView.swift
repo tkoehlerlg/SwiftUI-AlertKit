@@ -13,6 +13,7 @@ public struct GlobalAKAlertView<Content>: View where Content : View {
     private var alertBackground: AnyShapeStyle? = nil
     private var alertStackView: ((AKAlertState) -> Content)? = nil
     private var accentColor: Color = .accentColor
+    private var textColor: Color = .primary
     private var content: Content
 
     public init<OB, AB>(
@@ -31,13 +32,15 @@ public struct GlobalAKAlertView<Content>: View where Content : View {
     public init<OB, AB>(
         overlayBackground: OB = .ultraThinMaterial,
         alertBackground: AB = .thinMaterial,
-        accentColor: Color,
+        accentColor: Color = .accentColor,
+        textColor: Color = .primary,
         @ViewBuilder content: () -> Content
     ) where OB : ShapeStyle, AB : ShapeStyle {
         _alertState = StateObject(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
         self.alertBackground = AnyShapeStyle(alertBackground)
         self.accentColor = accentColor
+        self.textColor = textColor
         self.content = content()
     }
 
@@ -65,7 +68,8 @@ public struct GlobalAKAlertView<Content>: View where Content : View {
                     AlertStackView(
                         alertState: alertState,
                         alertBackground: alertBackground,
-                        accentColor: accentColor
+                        accentColor: accentColor,
+                        textColor: textColor
                     )
                 }
             }

@@ -13,15 +13,18 @@ struct AlertStackView: View {
     @State private var popAlert: Bool = false
     private var alertBackground: AnyShapeStyle
     private var accentColor: Color
+    private var textColor: Color
 
     init<S>(
         alertState: AKAlertState,
         alertBackground: S = .thinMaterial,
-        accentColor: Color
+        accentColor: Color,
+        textColor: Color
     ) where S : ShapeStyle {
         self.alertState = alertState
         self.alertBackground = AnyShapeStyle(alertBackground)
         self.accentColor = accentColor
+        self.textColor = textColor
     }
 
     var body: some View {
@@ -32,6 +35,7 @@ struct AlertStackView: View {
                         alert: alert,
                         background: alertBackground,
                         accentColor: accentColor,
+                        textColor: textColor,
                         closeAlert: {
                             alertState.closeAlert(alert)
                         }
@@ -48,7 +52,8 @@ struct AlertStackView_Previews: PreviewProvider {
     static var previews: some View {
         AlertStackView(
             alertState: .mock,
-            accentColor: .orange
+            accentColor: .orange,
+            textColor: .primary
         )
     }
 }

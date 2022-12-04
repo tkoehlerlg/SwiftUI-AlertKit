@@ -19,7 +19,7 @@ struct AlertView: View {
         alert: AKAlert,
         background: S = .thinMaterial,
         accentColor: Color,
-        textColor: Color = .primary,
+        textColor: Color,
         closeAlert: @escaping () -> Void
     ) where S : ShapeStyle {
         self.alert = alert
@@ -87,6 +87,7 @@ struct AlertView_Previews: PreviewProvider {
         AlertView(
             alert: AKAlert.mock,
             accentColor: .blue,
+            textColor: .primary,
             closeAlert: {}
         )
     }

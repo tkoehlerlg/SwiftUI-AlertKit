@@ -26,7 +26,7 @@ public class AKAlert: NSObject, NSCopying, Identifiable {
             self.buttons = [
                 .init(
                     title: "Okay",
-                    style: .secondary(accentColor: .accentColor),
+                    style: .secondary,
                     action: {}
                 )
             ]
