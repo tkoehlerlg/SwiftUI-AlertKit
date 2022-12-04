@@ -1,18 +1,18 @@
 # SwiftUI-AlertKit
 
-An Alert-Kit for SwiftUI! For easy integration without minding any logic or design, but fully customizable!
+An Alert-Kit for SwiftUI! For easy integration without minding any logic or design, but fully customizable! And I bet you love the animations!
 
 ## 🚀 Integration
 You can either integrate this Package in your *App-Project* or in your *Package.swift* file if you're building a Package. Simply refer to the current version `0.3.3` and set it to next minor version.
 
 ## 🛠️ Use
-This Project is fokused on easy simple integration aswell as easy maintaince you simply set the `GlobalAKAlertView` around your ParentView and everythink works right out of the Box!
+This Project is focused on simple integration as well as easy maintaince you simply set the `GlobalAKAlertView` around your ParentView and everything works right out of the Box!
 ```swift
 GlobalAKAlertView(accentColor: .orange) {
     ParentView { }
 }
 ```
-#### You can easiely modify most of the styles:
+#### You can easily modify most of the styles:
 `overlayBackground: ShapeStyle`,
 `alertBackground: ShapeStyle`,
 `accentColor: Color` and 
@@ -30,8 +30,8 @@ GlobalAKAlertView(
 }
 ```
 
-### Raisin an Alert has never been easier!
-Just set an optional AKAlert to the desired alert and it
+#### Raising an Alert has never been easier!
+Just set an optional AKAlert to the desired alert and it alerts the user emiditly!
 ```swift
 struct ChildView: View {
     @State var alert: AKAlert?
@@ -52,7 +52,7 @@ struct ChildView: View {
     }
 }
 ```
-## Do you like The Composable Architecture? I do too!
+### Do you like The Composable Architecture? I do too!
 We support the Composable Architecture right out of the Swift Package!
 ```swift
 struct Child: ReducerProtocol {
@@ -106,3 +106,5 @@ struct ChildView: View {
 }
 ```
 This is all!
+
+### Hope you like the Repo and please left a star!
