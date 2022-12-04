@@ -48,18 +48,6 @@ extension EnvironmentValues {
     }
 }
 
-// MARK: Composable Architecture
-extension AKAlertStateKey: DependencyKey {
-    static var liveValue: AKAlertState = .init()
-}
-
-extension DependencyValues {
-    public var alertState: AKAlertState {
-        get { self[AKAlertStateKey.self] }
-        set { self[AKAlertStateKey.self] = newValue }
-    }
-}
-
 // MARK: mock
 extension AKAlertState {
     internal static var mock: Self {
