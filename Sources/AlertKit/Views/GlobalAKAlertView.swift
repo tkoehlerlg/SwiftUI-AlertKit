@@ -10,21 +10,21 @@ import SwiftUI
 public struct GlobalAKAlertView<Content>: View where Content : View {
     @StateObject private var alertState: AKAlertState
     private var overlayBackground: AnyShapeStyle
-    private var alertBackground: AnyShapeStyle? = nil
+    private var alertBackground: AnyShapeStyle = .init(.thinMaterial)
     private var alertStackView: ((AKAlertState) -> Content)? = nil
     private var accentColor: Color = .accentColor
     private var textColor: Color = .primary
     private var content: Content
 
-    public init<OB, AB>(
+    public init<OB>(
         overlayBackground: OB = .ultraThinMaterial,
-        alertBackground: AB = .thinMaterial,
+        textColor: Color = .primary,
         @ViewBuilder alertStackView: @escaping (AKAlertState) -> Content,
         @ViewBuilder content: () -> Content
-    ) where OB : ShapeStyle, AB : ShapeStyle {
+    ) where OB : ShapeStyle {
         _alertState = StateObject(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
-        self.alertBackground = AnyShapeStyle(alertBackground)
+        self.textColor = textColor
         self.alertStackView = alertStackView
         self.content = content()
     }
@@ -64,14 +64,12 @@ public struct GlobalAKAlertView<Content>: View where Content : View {
             if let alertStackView = alertStackView {
                 alertStackView(alertState)
             } else {
-                if let alertBackground {
-                    AlertStackView(
-                        alertState: alertState,
-                        alertBackground: alertBackground,
-                        accentColor: accentColor,
-                        textColor: textColor
-                    )
-                }
+                AlertStackView(
+                    alertState: alertState,
+                    alertBackground: alertBackground,
+                    accentColor: accentColor,
+                    textColor: textColor
+                )
             }
         }
     }
