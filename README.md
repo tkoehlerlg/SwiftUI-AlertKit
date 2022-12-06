@@ -3,7 +3,7 @@
 An Alert-Kit for SwiftUI! For easy integration without minding any logic or design, but fully customizable! And I bet you love the animations!
 
 ## 🚀 Integration
-You can either integrate this Package in your *App-Project* or in your *Package.swift* file if you're building a Package. Simply refer to the current version `0.3.4` and set it to next minor version.
+You can either integrate this Package in your *App-Project* or in your *Package.swift* file if you're building a Package. Simply refer to the current version `0.3.6` and set it to next minor version.
 
 ## 🛠️ Use
 This Project is focused on simple integration as well as easy maintaince. You simply set the `GlobalAKAlertView` around your ParentView and everything works right out of the Box!
