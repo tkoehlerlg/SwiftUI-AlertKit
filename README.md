@@ -29,7 +29,6 @@ GlobalAKAlertView(
     ParentView { }
 }
 ```
-
 #### Raising an Alert has never been easier!
 Just set an optional AKAlert to the desired alert and it alerts the user immediately!
 ```swift
@@ -52,7 +51,7 @@ struct ChildView: View {
     }
 }
 ```
-<img src="https://user-images.githubusercontent.com/62466714/205874926-3c916283-7b98-4f47-a444-ed1108479d94.png" width="200" /><br />
+<img src="https://user-images.githubusercontent.com/62466714/205879379-358f94b9-5580-4fbb-b239-f3e2ca0ffcb6.png" width="200" /><br />
 ### Do you like The Composable Architecture? I do too!
 We support the Composable Architecture right out of the Swift Package!
 ```swift
