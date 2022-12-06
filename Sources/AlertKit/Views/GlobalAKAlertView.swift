@@ -46,7 +46,7 @@ public struct GlobalAKAlertView<Content>: View where Content : View {
 
     public var body: some View {
         content
-            .environmentObject(alertState)
+            .environment(\.alertState, alertState)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay {
                 if alertState.alerts.count > 0 {

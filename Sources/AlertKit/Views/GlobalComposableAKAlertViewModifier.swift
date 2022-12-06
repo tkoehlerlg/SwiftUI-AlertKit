@@ -10,7 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GlobalComposableAKAlertViewModifier<State: Equatable, Action: Equatable>: ViewModifier {
-    @EnvironmentObject var alertState: AKAlertState
+    @Environment(\.alertState) var alertState
     @Binding var alert: ComposableAKAlert<Action>?
     var viewStore: ViewStore<State, Action>
 
@@ -72,4 +72,3 @@ extension ComposableAKAlert {
         return alert
     }
 }
-

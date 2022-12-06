@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct GlobalAKAlertViewModifier: ViewModifier {
-    @EnvironmentObject var alertState: AKAlertState
+    @Environment(\.alertState) var alertState
     @Binding var alert: AKAlert?
 
     func body(content: Content) -> some View {
@@ -48,4 +48,3 @@ extension AKAlert {
         return alert
     }
 }
-
