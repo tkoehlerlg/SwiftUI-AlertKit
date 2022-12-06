@@ -51,6 +51,7 @@ struct ChildView: View {
     }
 }
 ```
+Here a image of how an Alert looks like only set the accent color to orange:
 <img src="https://user-images.githubusercontent.com/62466714/205879379-358f94b9-5580-4fbb-b239-f3e2ca0ffcb6.png" width="200" /><br />
 ### Do you like The Composable Architecture? I do too!
 We support the Composable Architecture right out of the Swift Package!
