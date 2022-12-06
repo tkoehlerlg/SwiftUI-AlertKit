@@ -52,7 +52,7 @@ struct ChildView: View {
     }
 }
 ```
-![simulator_screenshot_4C40B2D6-B653-422E-9E09-DC9EBEC6BBF8](https://user-images.githubusercontent.com/62466714/205874926-3c916283-7b98-4f47-a444-ed1108479d94.png)
+![ChildView-Alert](https://user-images.githubusercontent.com/62466714/205874926-3c916283-7b98-4f47-a444-ed1108479d94.png | width=150)
 ### Do you like The Composable Architecture? I do too!
 We support the Composable Architecture right out of the Swift Package!
 ```swift
