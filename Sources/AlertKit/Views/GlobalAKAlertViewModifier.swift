@@ -30,7 +30,7 @@ extension View {
                 return
             }
 
-            withAnimation(.easeOut(duration: 0.3).delay(0.5)) {
+            withAnimation(.easeOut(duration: 0.3)) {
                 alertState.addAlert(newAlert.setNilWhenAlertClosed(binding: alert))
             }
         }

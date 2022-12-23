@@ -41,7 +41,7 @@ struct AlertStackView: View {
                         }
                     )
                 }
-                .transition(.scale(scale: 1.1).combined(with: .opacity).animation(.easeOut(duration: 0.5)))
+                .transition(.scale(scale: 1.1).combined(with: .opacity).animation(.easeOut(duration: 0.2)))
                 .opacity(alertState.alerts.firstIndex(of: alert) ?? -1 == 0 ? 1 : 0)
             }
         }
