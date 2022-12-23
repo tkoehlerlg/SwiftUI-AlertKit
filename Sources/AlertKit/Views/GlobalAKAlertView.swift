@@ -6,37 +6,41 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
-import Dependencies
 
-public struct GlobalAlertView<Content>: View where Content : View {
-    @BindableState private var alertState: AlertState
-    private var overlayBackground: AnyShapeStyle
-    private var alertStackView: ((AlertState) -> Content)? = nil
+public struct GlobalAKAlertView<Content>: View where Content : View {
+    @StateObject private var alertState: AKAlertState
     private var accentColor: Color = .accentColor
+    private var textColor: Color = .primary
+    private var alertBackground: AnyShapeStyle = .init(.white)
+    private var overlayBackground: AnyShapeStyle
+    private var alertStackView: ((AKAlertState) -> Content)? = nil
     private var content: Content
 
-    public init<S>(
-        alertState: BindableState<AlertState>? = nil,
-        overlayBackground: S = .ultraThinMaterial,
-        @ViewBuilder alertStackView: @escaping (AlertState) -> Content,
+    public init<OB>(
+        textColor: Color = .primary,
+        overlayBackground: OB = .ultraThinMaterial,
+        @ViewBuilder alertStackView: @escaping (AKAlertState) -> Content,
         @ViewBuilder content: () -> Content
-    ) where S : ShapeStyle {
-        _alertState = alertState ?? BindableState(wrappedValue: .init())
+    ) where OB : ShapeStyle {
+        _alertState = StateObject(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
+        self.textColor = textColor
         self.alertStackView = alertStackView
         self.content = content()
     }
 
-    public init<S>(
-        alertState: BindableState<AlertState>? = nil,
-        overlayBackground: S = .ultraThinMaterial,
-        accentColor: Color,
+    public init<OB, AB>(
+        accentColor: Color = .accentColor,
+        textColor: Color = .primary,
+        alertBackground: AB = .white,
+        overlayBackground: OB = .ultraThinMaterial,
         @ViewBuilder content: () -> Content
-    ) where S : ShapeStyle {
-        _alertState = alertState ?? BindableState(wrappedValue: .init())
+    ) where OB : ShapeStyle, AB : ShapeStyle {
+        _alertState = StateObject(wrappedValue: .init())
         self.overlayBackground = AnyShapeStyle(overlayBackground)
+        self.alertBackground = AnyShapeStyle(alertBackground)
         self.accentColor = accentColor
+        self.textColor = textColor
         self.content = content()
     }
 
@@ -62,7 +66,9 @@ public struct GlobalAlertView<Content>: View where Content : View {
             } else {
                 AlertStackView(
                     alertState: alertState,
-                    accentColor: accentColor
+                    alertBackground: alertBackground,
+                    accentColor: accentColor,
+                    textColor: textColor
                 )
             }
         }
@@ -71,7 +77,7 @@ public struct GlobalAlertView<Content>: View where Content : View {
 
 struct GlobalAlertView_Previews: PreviewProvider {
     static var previews: some View {
-        GlobalAlertView(accentColor: .orange) {
+        GlobalAKAlertView(accentColor: .orange) {
 //            Color.red
             Text("Hello Little Torben")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
