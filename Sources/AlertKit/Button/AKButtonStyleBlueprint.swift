@@ -37,7 +37,8 @@ extension AKButtonStyleBlueprint {
         .init(
             backgroundColor: .clear,
             textColor: accentColor,
-            borderColor: accentColor
+            borderColor: accentColor,
+            isPressedBackgroundColor: accentColor.opacity(0.1)
         )
     }
     public static func destructive(
