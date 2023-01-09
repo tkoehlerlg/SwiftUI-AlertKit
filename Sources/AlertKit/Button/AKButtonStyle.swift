@@ -28,6 +28,7 @@ struct AKButtonStyle: ButtonStyle {
                 }
             }
             .cornerRadius(15)
+            .contentShape(RoundedRectangle(cornerRadius: 15))
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
     }
