@@ -9,14 +9,14 @@ import SwiftUI
 import ColorSync
 
 struct AlertStackView: View {
-    @ObservedObject private var alertState: AKAlertState
+    @ObservedObject private var alertState: GlobalAKAlertState
     @State private var popAlert: Bool = false
     private var alertBackground: AnyShapeStyle
     private var accentColor: Color
     private var textColor: Color
 
     init<S>(
-        alertState: AKAlertState,
+        alertState: GlobalAKAlertState,
         alertBackground: S = .thinMaterial,
         accentColor: Color,
         textColor: Color

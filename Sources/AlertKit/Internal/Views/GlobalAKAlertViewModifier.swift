@@ -23,7 +23,7 @@ extension View {
         self.modifier(GlobalAKAlertViewModifier(alert: alert))
     }
 
-    func alert(_ alert: Binding<AKAlert?>, alertState: AKAlertState) -> some View {
+    func alert(_ alert: Binding<AKAlert?>, alertState: GlobalAKAlertState) -> some View {
         self.onChange(of: alert.wrappedValue) { newAlert in
             guard let newAlert = newAlert else {
                 alertState.closeFirstAlert()

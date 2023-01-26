@@ -1,5 +1,5 @@
 //
-//  AKAlertState.swift
+//  GlobalAKAlertState.swift
 //  SwiftUI-AlertKit
 //
 //  Created by Torben Köhler on 26.11.22.
@@ -10,7 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 import Dependencies
 
-public final class AKAlertState: ObservableObject {
+public final class GlobalAKAlertState: ObservableObject {
     @Published public private(set) var alerts: IdentifiedArrayOf<AKAlert> = .init()
 
     public init() { }
@@ -38,18 +38,18 @@ public final class AKAlertState: ObservableObject {
 
 // MARK: Environment
 internal struct AKAlertStateKey: EnvironmentKey {
-    public static var defaultValue: AKAlertState = .init()
+    public static var defaultValue: GlobalAKAlertState = .init()
 }
 
 extension EnvironmentValues {
-    public var alertState: AKAlertState {
+    public var alertState: GlobalAKAlertState {
         get { self[AKAlertStateKey.self] }
         set { self[AKAlertStateKey.self] = newValue }
     }
 }
 
 // MARK: mock
-extension AKAlertState {
+extension GlobalAKAlertState {
     internal static var mock: Self {
         .init([.mock])
     }

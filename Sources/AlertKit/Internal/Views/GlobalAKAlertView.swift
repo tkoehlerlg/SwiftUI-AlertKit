@@ -8,18 +8,18 @@
 import SwiftUI
 
 public struct GlobalAKAlertView<Content>: View where Content : View {
-    @StateObject private var alertState: AKAlertState
+    @StateObject private var alertState: GlobalAKAlertState
     private var accentColor: Color = .accentColor
     private var textColor: Color = .primary
     private var alertBackground: AnyShapeStyle = .init(.white)
     private var overlayBackground: AnyShapeStyle
-    private var alertStackView: ((AKAlertState) -> Content)? = nil
+    private var alertStackView: ((GlobalAKAlertState) -> Content)? = nil
     private var content: Content
 
     public init<OB>(
         textColor: Color = .primary,
         overlayBackground: OB = .ultraThinMaterial,
-        @ViewBuilder alertStackView: @escaping (AKAlertState) -> Content,
+        @ViewBuilder alertStackView: @escaping (GlobalAKAlertState) -> Content,
         @ViewBuilder content: () -> Content
     ) where OB : ShapeStyle {
         _alertState = StateObject(wrappedValue: .init())

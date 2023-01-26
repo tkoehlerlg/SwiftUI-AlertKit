@@ -59,47 +59,6 @@ public class AKAlert: NSObject, NSCopying, Identifiable {
     }
 }
 
-public class ComposableAKAlert<Action: Equatable>: AKAlert {
-    public var _closeAction: Action?
-
-    public init(
-        title: String,
-        message: String,
-        buttons: [AKButton] = [],
-        closeAction: Action? = nil // TODO: This is not working currently but viewModifier changes as expected!
-    ) {
-        super.init(
-            title: title,
-            message: message,
-            buttons: buttons,
-            closeAction: nil
-        )
-        self._closeAction = closeAction
-    }
-
-    public init(
-        title: String,
-        message: String,
-        primaryButton: AKButton,
-        secondaryButton: AKButton? = nil,
-        closeAction: Action? = nil
-    ) {
-        super.init(
-            title: title,
-            message: message,
-            primaryButton: primaryButton,
-            secondaryButton: secondaryButton,
-            closeAction: nil
-        )
-        self._closeAction = closeAction
-    }
-
-    override public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = ComposableAKAlert(title: title, message: message, buttons: buttons, closeAction: _closeAction)
-        return copy
-    }
-}
-
 extension AKAlert {
     internal static var mock = AKAlert(
         title: "Alert",
@@ -120,6 +79,7 @@ extension AKAlert {
                 style: .destructive,
                 action: { print("Destructiv") }
             )
-        ]
+        ],
+        closeAction: nil
     )
 }

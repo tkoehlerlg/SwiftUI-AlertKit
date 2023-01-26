@@ -7,9 +7,8 @@ let package = Package(
     name: "AlertKit",
     platforms: [.iOS(.v15), .macOS(.v12)],
     products: [
-        .library(
-            name: "AlertKit",
-            targets: ["AlertKit"]),
+        .library(name: "AlertKit", targets: ["AlertKit"]),
+        .library(name: "ComposableAlertKit", targets: ["ComposableAlertKit"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.30.0"),
@@ -18,6 +17,11 @@ let package = Package(
     targets: [
         .target(
             name: "AlertKit",
+            dependencies: [
+                .product(name: "SwiftUIX", package: "SwiftUIX")
+            ]),
+        .target(
+            name: "ComposableAlertKit",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SystemColors", package: "swiftui-system-colors")
