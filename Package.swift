@@ -18,7 +18,8 @@ let package = Package(
         .target(
             name: "AlertKit",
             dependencies: [
-                .product(name: "SwiftUIX", package: "SwiftUIX")
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SystemColors", package: "swiftui-system-colors")
             ]),
         .target(
             name: "ComposableAlertKit",
