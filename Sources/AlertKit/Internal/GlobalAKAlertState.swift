@@ -7,32 +7,56 @@
 
 import Foundation
 import SwiftUI
-import IdentifiedCollections
+import ComposableArchitecture
 import Dependencies
 
 public final class GlobalAKAlertState: ObservableObject {
-    @Published public private(set) var alerts: IdentifiedArrayOf<AKAlert> = .init()
+    @Published private(set) var alerts: IdentifiedArrayOf<InternalAKAlert> = []
 
     public init() { }
 
-    internal init(_ alerts: IdentifiedArrayOf<AKAlert>) {
-        self.alerts = alerts
+    internal init(_ alerts: [AKAlert]) {
+        self.alerts = .init(uniqueElements: alerts.map { $0.toInternal(defaultAction: {}) })
     }
 
-    public func addAlert(_ alert: AKAlert) {
+    func addAlert(_ alert: InternalAKAlert) {
         alerts.append(alert)
     }
 
+    public func addAlert(_ alert: AKAlert) {
+        addAlert(alert.toInternal(defaultAction: {}))
+    }
+
+    func closeAlert<State: Equatable, Action: Equatable>(_ alert: InternalAKAlert, viewStore: ViewStore<State, Action>) {
+        guard var alert = alerts[id: alert.id] else { return }
+        alert.closeAction?.execute(viewStore: viewStore)
+        alerts.remove(id: alert.id)
+        alert.defaultAction()
+    }
+
+    public func closeAlert<State: Equatable, Action: Equatable>(_ alert: AKAlert, viewStore: ViewStore<State, Action>) {
+        closeAlert(alert.toInternal(defaultAction: {}), viewStore: viewStore)
+    }
+
+    func closeAlert(_ alert: InternalAKAlert) {
+        guard var alert = alerts[id: alert.id] else { return }
+        alert.closeAction?.execute()
+        alerts.remove(id: alert.id)
+        alert.defaultAction()
+    }
+
     public func closeAlert(_ alert: AKAlert) {
-        alert.closeAction?()
-        alerts.removeAll(where: { $0.id == alert.id })
+        closeAlert(alert.toInternal(defaultAction: {}))
+    }
+
+    public func closeFirstAlert<State: Equatable, Action: Equatable>(viewStore: ViewStore<State, Action>) {
+        guard let firstAlert = alerts.first else { return }
+        closeAlert(firstAlert, viewStore: viewStore)
     }
 
     public func closeFirstAlert() {
-        if !alerts.isEmpty {
-            alerts.first!.closeAction?()
-            alerts.removeFirst()
-        }
+        guard let firstAlert = alerts.first else { return }
+        closeAlert(firstAlert)
     }
 }
 

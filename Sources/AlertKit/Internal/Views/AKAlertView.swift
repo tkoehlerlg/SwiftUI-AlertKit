@@ -9,7 +9,7 @@ import SwiftUI
 import SystemColors
 
 struct AlertView: View {
-    var alert: AKAlert
+    var alert: InternalAKAlert
     var background: AnyShapeStyle
     var accentColor: Color
     var textColor: Color
@@ -47,7 +47,7 @@ struct AlertView: View {
                         withAnimation {
                             closeAlert()
                         }
-                        button.action()
+                        button.action.exe
                     }, label: {
                         Text(button.title)
                     })

@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import ComposableArchitecture
 
 struct GlobalAKAlertViewModifier: ViewModifier {
     @Environment(\.alertState) var alertState
@@ -23,6 +24,10 @@ extension View {
         self.modifier(GlobalAKAlertViewModifier(alert: alert))
     }
 
+    public func alert<State: Equatable, Action: Equatable>(_ alert: Binding<AKAlert?>, viewStore: ViewStore<State, Action>) -> some View {
+        self.modifier(GlobalAKAlertViewModifier(alert: alert))
+    }
+
     func alert(_ alert: Binding<AKAlert?>, alertState: GlobalAKAlertState) -> some View {
         self.onChange(of: alert.wrappedValue) { newAlert in
             guard let newAlert = newAlert else {
@@ -31,20 +36,21 @@ extension View {
             }
 
             withAnimation(.easeOut(duration: 0.3)) {
-                alertState.addAlert(newAlert.setNilWhenAlertClosed(binding: alert))
+                alertState.addAlert(newAlert.toInternal(defaultAction: { alert.wrappedValue = nil }))
             }
         }
     }
-}
 
-extension AKAlert {
-    func setNilWhenAlertClosed(binding: Binding<AKAlert?>) -> AKAlert {
-        let alert = self.copy() as! AKAlert
-        let closeAction: () -> Void = {
-            self.closeAction?()
-            binding.wrappedValue = nil
+    func alert<State: Equatable, Action: Equatable>(_ alert: Binding<AKAlert?>, viewStore: ViewStore<State, Action>, alertState: GlobalAKAlertState) -> some View {
+        self.onChange(of: alert.wrappedValue) { newAlert in
+            guard let newAlert = newAlert else {
+                alertState.closeFirstAlert(viewStore: viewStore)
+                return
+            }
+
+            withAnimation(.easeOut(duration: 0.3)) {
+                alertState.addAlert(newAlert.toInternal(defaultAction: { alert.wrappedValue = nil }))
+            }
         }
-        alert.closeAction = closeAction
-        return alert
     }
 }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ColorSync
+import ComposableArchitecture
 
 struct AlertStackView: View {
     @ObservedObject private var alertState: GlobalAKAlertState
@@ -27,12 +28,16 @@ struct AlertStackView: View {
         self.textColor = textColor
     }
 
+    func isFirstAlert(alert: InternalAKAlert) -> Bool {
+        return alertState.alerts.first?.id == alert.id
+    }
+
     var body: some View {
         ZStack {
             ForEach(alertState.alerts) { alert in
                 Group {
                     AlertView(
-                        alert: alert,
+                        alert: alert.toAKAlert(),
                         background: alertBackground,
                         accentColor: accentColor,
                         textColor: textColor,
@@ -42,7 +47,7 @@ struct AlertStackView: View {
                     )
                 }
                 .transition(.scale(scale: 1.1).combined(with: .opacity).animation(.easeOut(duration: 0.2)))
-                .opacity(alertState.alerts.firstIndex(of: alert) ?? -1 == 0 ? 1 : 0)
+                .opacity(isFirstAlert(alert: alert) ? 1 : 0)
             }
         }
     }

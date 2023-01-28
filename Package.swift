@@ -6,10 +6,7 @@ import PackageDescription
 let package = Package(
     name: "AlertKit",
     platforms: [.iOS(.v15), .macOS(.v12)],
-    products: [
-        .library(name: "AlertKit", targets: ["AlertKit"]),
-        .library(name: "ComposableAlertKit", targets: ["ComposableAlertKit"])
-    ],
+    products: [.library(name: "AlertKit", targets: ["AlertKit"])],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.30.0"),
         .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "0.4.1"),
@@ -18,12 +15,6 @@ let package = Package(
     targets: [
         .target(
             name: "AlertKit",
-            dependencies: [
-                .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
-                .product(name: "SystemColors", package: "swiftui-system-colors")
-            ]),
-        .target(
-            name: "ComposableAlertKit",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SystemColors", package: "swiftui-system-colors")
