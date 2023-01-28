@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SystemColors
+import SwiftUIX
 
 struct AlertView: View {
     var alert: AKAlert
