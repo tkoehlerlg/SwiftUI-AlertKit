@@ -23,9 +23,12 @@ public final class GlobalAKAlertState: ObservableObject {
         alerts.append(alert)
     }
 
-    public func closeAlert(_ alert: AKAlert) {
+    public func closeAlert<State: Equatable, Action: Equatable>(
+        _ alert: AKAlert,
+        viewStore: ViewStore<State, Action>
+    ) {
         alert.closeAction?()
-        alerts.removeAll(where: { $0.id == alert.id })
+        alerts.remove(id: alert.id)
     }
 
     public func closeFirstAlert() {

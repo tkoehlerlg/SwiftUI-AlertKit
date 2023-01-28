@@ -15,6 +15,7 @@ public class AKAlert: NSObject, NSCopying, Identifiable {
     public var closeAction: (() -> Void)?
 
     public init(
+        id: UUID = UUID(),
         title: String,
         message: String,
         buttons: [AKButton] = [],
@@ -37,6 +38,7 @@ public class AKAlert: NSObject, NSCopying, Identifiable {
     }
 
     public init(
+        id: UUID = UUID(),
         title: String,
         message: String,
         primaryButton: AKButton,

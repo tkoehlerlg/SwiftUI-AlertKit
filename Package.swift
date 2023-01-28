@@ -12,13 +12,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.30.0"),
+        .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "0.4.1"),
         .package(url: "https://github.com/diniska/swiftui-system-colors.git", from: "1.2.0")
     ],
     targets: [
         .target(
             name: "AlertKit",
             dependencies: [
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
                 .product(name: "SystemColors", package: "swiftui-system-colors")
             ]),
         .target(

@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import ComposableArchitecture
+import IdentifiedCollections
 import Dependencies
 
 public final class GlobalAKAlertState: ObservableObject {
