@@ -7,7 +7,11 @@
 
 import Foundation
 
-public class AKAlert: NSObject, NSCopying, Identifiable {
+public class AKAlert: Identifiable, Equatable {
+    public static func == (lhs: AKAlert, rhs: AKAlert) -> Bool {
+        lhs.id == rhs.id && lhs.title == rhs.title && lhs.message == rhs.message && lhs.buttons == rhs.buttons
+    }
+
     public var id: String { title + message }
     public var title: String
     public var message: String
@@ -53,9 +57,15 @@ public class AKAlert: NSObject, NSCopying, Identifiable {
         self.closeAction = closeAction
     }
 
-    public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = AKAlert(title: title, message: message, buttons: buttons, closeAction: closeAction)
-        return copy
+    func toInternal(defaultAction: @escaping () -> Void) -> InternalAKAlert {
+        .init(
+            id: id,
+            title: title,
+            message: message,
+            buttons: buttons,
+            closeAction: closeAction,
+            defaultAction: defaultAction
+        )
     }
 }
 
@@ -92,11 +102,6 @@ public class ComposableAKAlert<Action: Equatable>: AKAlert {
             closeAction: nil
         )
         self._closeAction = closeAction
-    }
-
-    override public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = ComposableAKAlert(title: title, message: message, buttons: buttons, closeAction: _closeAction)
-        return copy
     }
 }
 
