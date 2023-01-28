@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
-import SwiftUIX
 
 public struct GlobalAKAlertView<Content>: View where Content : View {
     @StateObject private var alertState: GlobalAKAlertState
     private var accentColor: Color = .accentColor
     private var textColor: Color = .primary
-    private var alertBackground: AnyShapeStyle = .init(Color.systemBackground)
+    private var alertBackground: AnyShapeStyle = .init(.white)
     private var overlayBackground: AnyShapeStyle
     private var alertStackView: ((GlobalAKAlertState) -> Content)? = nil
     private var content: Content
@@ -33,7 +32,7 @@ public struct GlobalAKAlertView<Content>: View where Content : View {
     public init<OB, AB>(
         accentColor: Color = .accentColor,
         textColor: Color = .primary,
-        alertBackground: AB = Color.systemBackground,
+        alertBackground: AB = .white,
         overlayBackground: OB = .ultraThinMaterial,
         @ViewBuilder content: () -> Content
     ) where OB : ShapeStyle, AB : ShapeStyle {
