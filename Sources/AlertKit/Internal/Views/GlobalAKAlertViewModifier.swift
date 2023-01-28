@@ -19,13 +19,24 @@ struct GlobalAKAlertViewModifier: ViewModifier {
     }
 }
 
+struct GlobalCAKAlertViewModifier<State: Equatable, Action: Equatable>: ViewModifier {
+    @Environment(\.alertState) var alertState
+    @Binding var alert: AKAlert?
+    var viewStore: ViewStore<State, Action>
+
+    func body(content: Content) -> some View {
+        content
+            .alert($alert, viewStore: viewStore, alertState: alertState)
+    }
+}
+
 extension View {
     public func alert(_ alert: Binding<AKAlert?>) -> some View {
         self.modifier(GlobalAKAlertViewModifier(alert: alert))
     }
 
     public func alert<State: Equatable, Action: Equatable>(_ alert: Binding<AKAlert?>, viewStore: ViewStore<State, Action>) -> some View {
-        self.modifier(GlobalAKAlertViewModifier(alert: alert))
+        self.modifier(GlobalCAKAlertViewModifier(alert: alert, viewStore: viewStore))
     }
 
     func alert(_ alert: Binding<AKAlert?>, alertState: GlobalAKAlertState) -> some View {
@@ -49,7 +60,7 @@ extension View {
             }
 
             withAnimation(.easeOut(duration: 0.3)) {
-                alertState.addAlert(newAlert.toInternal(defaultAction: { alert.wrappedValue = nil }))
+                alertState.addAlert(newAlert.toInternal(defaultAction: { alert.wrappedValue = nil }, viewStore: viewStore))
             }
         }
     }

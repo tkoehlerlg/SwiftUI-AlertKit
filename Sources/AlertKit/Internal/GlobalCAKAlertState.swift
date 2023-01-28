@@ -1,5 +1,5 @@
 //
-//  GlobalAKAlertState.swift
+//  GlobalCAKAlertState.swift
 //  SwiftUI-AlertKit
 //
 //  Created by Torben Köhler on 26.11.22.
@@ -10,13 +10,13 @@ import SwiftUI
 import ComposableArchitecture
 import Dependencies
 
-public final class GlobalAKAlertState: ObservableObject {
-    @Published private(set) var alerts: IdentifiedArrayOf<InternalAKAlert> = []
+public final class GlobalCAKAlertState: ObservableObject {
+    @Published private(set) var alerts: IdentifiedArrayOf<InternalCAKAlert> = []
 
     public init() { }
 
-    internal init(_ alerts: [AKAlert]) {
-        self.alerts = .init(uniqueElements: alerts.map { $0.toInternal() })
+    internal init<Action: Equatable>(_ alerts: [CAKAlert<CAKAlertAction>]) {
+        self.alerts = .init(uniqueElements: alerts.map { $0.toInternal(executeButtonAction: { _ in }) })
     }
 
     func addAlert(_ alert: InternalAKAlert) {
