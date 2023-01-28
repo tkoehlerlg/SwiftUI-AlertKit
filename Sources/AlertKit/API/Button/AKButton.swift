@@ -7,12 +7,16 @@
 
 import Foundation
 
-public class AKButton: NSObject, Identifiable {
+public class AKButton: Identifiable, Equatable {
+    public static func == (lhs: AKButton, rhs: AKButton) -> Bool {
+        lhs.title == rhs.title && lhs.style == rhs.style
+    }
+
     var title: String
     var style: Style
     var action: () -> Void
 
-    enum Style {
+    enum Style: Equatable {
         case system(SystemStyle)
         case custom(AKButtonStyleBlueprint)
     }
@@ -39,13 +43,6 @@ public class AKButton: NSObject, Identifiable {
         self.title = title
         self.style = .custom(style)
         self.action = action
-    }
-}
-
-extension AKButton: NSCopying {
-    public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = AKButton(title: title, style: style, action: action)
-        return copy
     }
 }
 

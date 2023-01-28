@@ -9,14 +9,14 @@ import SwiftUI
 import ColorSync
 
 struct AlertStackView: View {
-    @ObservedObject private var alertState: AKAlertState
+    @ObservedObject private var alertState: GlobalAKAlertState
     @State private var popAlert: Bool = false
     private var alertBackground: AnyShapeStyle
     private var accentColor: Color
     private var textColor: Color
 
     init<S>(
-        alertState: AKAlertState,
+        alertState: GlobalAKAlertState,
         alertBackground: S = .thinMaterial,
         accentColor: Color,
         textColor: Color
@@ -27,12 +27,16 @@ struct AlertStackView: View {
         self.textColor = textColor
     }
 
+    func isAlertPresented(_ alert: InternalAKAlert) -> Bool {
+        alertState.alerts.first?.id == alert.id
+    }
+
     var body: some View {
         ZStack {
             ForEach(alertState.alerts) { alert in
                 Group {
                     AlertView(
-                        alert: alert,
+                        alert: alert.toAKAlert(),
                         background: alertBackground,
                         accentColor: accentColor,
                         textColor: textColor,
@@ -42,7 +46,7 @@ struct AlertStackView: View {
                     )
                 }
                 .transition(.scale(scale: 1.1).combined(with: .opacity).animation(.easeOut(duration: 0.2)))
-                .opacity(alertState.alerts.firstIndex(of: alert) ?? -1 == 0 ? 1 : 0)
+                .opacity(isAlertPresented(alert) ? 1 : 0)
             }
         }
     }
