@@ -16,7 +16,7 @@ struct AlertView: View {
     var closeAlert: () -> Void
 
     init<S>(
-        alert: AKAlert,
+        alert: InternalAKAlert,
         background: S = .thinMaterial,
         accentColor: Color,
         textColor: Color,
@@ -47,7 +47,7 @@ struct AlertView: View {
                         withAnimation {
                             closeAlert()
                         }
-                        button.action.exe
+                        alert.executeButtonAction(button)
                     }, label: {
                         Text(button.title)
                     })
@@ -85,7 +85,7 @@ struct AlertView: View {
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
         AlertView(
-            alert: AKAlert.mock,
+            alert: AKAlert.mock.toInternal(defaultAction: {}),
             accentColor: .blue,
             textColor: .primary,
             closeAlert: {}

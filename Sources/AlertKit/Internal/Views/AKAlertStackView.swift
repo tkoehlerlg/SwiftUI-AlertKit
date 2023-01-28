@@ -37,7 +37,7 @@ struct AlertStackView: View {
             ForEach(alertState.alerts) { alert in
                 Group {
                     AlertView(
-                        alert: alert.toAKAlert(),
+                        alert: alert,
                         background: alertBackground,
                         accentColor: accentColor,
                         textColor: textColor,

@@ -23,18 +23,18 @@ public class AKButton: NSObject, Identifiable {
         case composable(any Equatable)
         case void(() -> Void)
 
-        func execute<State: Equatable, Action: Equatable>(viewStore: ViewStore<State, Action>) {
-            switch self {
-            case .composable(let composable):
-                viewStore.send(composable as! Action)
-            case .void(let void):
-                void()
-            }
-        }
-
-        func execute() {
-            if case .void(let void) = self {
-                void()
+        func execute(viewStore: ViewStore<any Equatable, any Equatable>?) {
+            if let viewStore {
+                switch self {
+                case .composable(let composable):
+                    viewStore.send(composable as! Action)
+                case .void(let void):
+                    void()
+                }
+            } else {
+                if case .void(let void) = self {
+                    void()
+                }
             }
         }
     }

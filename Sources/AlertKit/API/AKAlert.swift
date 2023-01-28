@@ -144,6 +144,7 @@ extension AKAlert {
             message: message,
             buttons: buttons,
             closeAction: closeAction,
+            viewStore: nil,
             defaultAction: defaultAction
         )
     }

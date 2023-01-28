@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  InternalAKAlert.swift
 //  
 //
 //  Created by Torben Köhler on 28.01.23.
@@ -38,18 +38,6 @@ internal struct InternalAKAlert: Identifiable {
     }
 
     func executeButtonAction(_ button: AKButton) {
-        button.action.execute(viewStore: viewStore!)
-    }
-}
-
-extension InternalAKAlert {
-    func toAKAlert() -> AKAlert {
-        .init(
-            id: id,
-            title: title,
-            message: message,
-            buttons: buttons,
-            closeAction: closeAction
-        )
+        button.action.execute(viewStore: viewStore)
     }
 }
