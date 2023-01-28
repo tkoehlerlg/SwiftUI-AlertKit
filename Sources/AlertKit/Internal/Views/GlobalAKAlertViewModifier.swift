@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct GlobalAKAlertViewModifier: ViewModifier {
-    @Environment(\.alertState) var alertState
+    @Environment(\.globalAlertState) var alertState
     @Binding var alert: AKAlert?
 
     func body(content: Content) -> some View {
@@ -23,7 +23,7 @@ extension View {
         self.modifier(GlobalAKAlertViewModifier(alert: alert))
     }
 
-    func alert(_ alert: Binding<AKAlert?>, alertState: AKAlertState) -> some View {
+    func alert(_ alert: Binding<AKAlert?>, alertState: GlobalAKAlertState) -> some View {
         self.onChange(of: alert.wrappedValue) { newAlert in
             guard let newAlert = newAlert else {
                 alertState.closeFirstAlert()
@@ -31,20 +31,8 @@ extension View {
             }
 
             withAnimation(.easeOut(duration: 0.3)) {
-                alertState.addAlert(newAlert.setNilWhenAlertClosed(binding: alert))
+                alertState.addAlert(newAlert.toInternal(defaultAction: { alert.wrappedValue = nil }))
             }
         }
-    }
-}
-
-extension AKAlert {
-    func setNilWhenAlertClosed(binding: Binding<AKAlert?>) -> AKAlert {
-        let alert = self.copy() as! AKAlert
-        let closeAction: () -> Void = {
-            self.closeAction?()
-            binding.wrappedValue = nil
-        }
-        alert.closeAction = closeAction
-        return alert
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftUIX
+import SystemColors
 
 struct AlertView: View {
     var alert: AKAlert
@@ -44,10 +44,10 @@ struct AlertView: View {
             VStack(spacing: 10) {
                 ForEach(alert.buttons, id: \.id) { button in
                     let buttonView = Button(action: {
+                        button.action()
                         withAnimation {
                             closeAlert()
                         }
-                        button.action()
                     }, label: {
                         Text(button.title)
                     })

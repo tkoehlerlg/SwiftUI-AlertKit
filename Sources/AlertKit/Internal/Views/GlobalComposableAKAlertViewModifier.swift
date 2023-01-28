@@ -10,7 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GlobalComposableAKAlertViewModifier<State: Equatable, Action: Equatable>: ViewModifier {
-    @Environment(\.alertState) var alertState
+    @Environment(\.globalAlertState) var alertState
     @Binding var alert: ComposableAKAlert<Action>?
     var viewStore: ViewStore<State, Action>
 
@@ -30,7 +30,7 @@ extension View {
 
     func alert<State: Equatable, Action: Equatable>(
         _ alert: Binding<ComposableAKAlert<Action>?>,
-        alertState: AKAlertState,
+        alertState: GlobalAKAlertState,
         viewStore: ViewStore<State, Action>
     ) -> some View {
         self.onChange(of: alert.wrappedValue) { newAlert in
@@ -38,37 +38,26 @@ extension View {
                 alertState.closeFirstAlert()
                 return
             }
-            if let _alert = alert.wrappedValue?.copy() as? ComposableAKAlert<Action> {
-                _alert.buttons = _alert.buttons.map {
+            let _alert: AKAlert = .init(
+                title: newAlert.title,
+                message: newAlert.message,
+                buttons: newAlert.buttons.map {
                     guard let button = $0 as? ComposableAKButton<Action>, let _action = button._action else { return $0 }
                     let action: () -> Void = {
                         viewStore.send(_action)
                     }
                     button.action = action
                     return button
-                }
-                if let closeAction = alert.wrappedValue?._closeAction {
-                    _alert.closeAction = {
+                },
+                closeAction: {
+                    if let closeAction = newAlert._closeAction {
                         viewStore.send(closeAction)
                     }
                 }
-                alert.wrappedValue = _alert
-            }
+            )
             withAnimation(.easeOut(duration: 0.3)) {
-                alertState.addAlert(newAlert.setNilWhenAlertClosed(binding: alert))
+                alertState.addAlert(_alert.toInternal(defaultAction: { alert.wrappedValue = nil }))
             }
         }
-    }
-}
-
-extension ComposableAKAlert {
-    func setNilWhenAlertClosed(binding: Binding<ComposableAKAlert?>) -> ComposableAKAlert {
-        let alert = self.copy() as! ComposableAKAlert
-        let closeAction: () -> Void = {
-            self.closeAction?()
-            binding.wrappedValue = nil
-        }
-        alert.closeAction = closeAction
-        return alert
     }
 }
